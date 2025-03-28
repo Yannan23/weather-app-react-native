@@ -1,8 +1,10 @@
-import { View, Text } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 // import styled from 'styled-components';
-// import SearchBar from '../components/Header/components/SeachBar';
+import SearchBar from '../components/Header/components/SeachBar';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../theme'
 
 const Index = () => {
     return (
@@ -12,7 +14,11 @@ const Index = () => {
                 locations={[0.2, 0.6, 0.8]}
                 style={{ flex: 1 }}
             >
-                {/* <SearchBar /> */}
+                <SafeAreaView>
+                    <ThemeProvider theme={theme}>
+                        <SearchBar />
+                    </ThemeProvider>
+                </SafeAreaView>
             </LinearGradient>
         </View>
     );
