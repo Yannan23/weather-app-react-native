@@ -10,7 +10,6 @@ const SearchBar = () => {
     const [fontsloaded] = useFonts({
         'Saira_Expanded-SemiBold': require('../../../../assets/fonts/Saira_Expanded-SemiBold.ttf'),
         'Saira_SemiExpanded-Light': require('../../../../assets/fonts/Saira_SemiExpanded-Light.ttf'), // Ensure case matches
-
     })
 
     if (!fontsloaded) {
@@ -51,7 +50,7 @@ const CityContainer = styled.View`
 
 const City = styled.Text`
     color: white;
-    font-family:'Saira_SemiExpanded-Light';
+    font-family: 'Saira_SemiExpanded-Light';
     font-size: 20px;
     margin-left:4px;
     margin-right:4px;
