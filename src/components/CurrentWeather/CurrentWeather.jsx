@@ -1,15 +1,23 @@
 import { View, Text, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components/native'
 import sun from '../../assets/images/partlycloudy.png'
+import LottieView from 'lottie-react-native';
 
 const CurrentWeather = () => {
+    const animation = useRef < LottieView > (null);
+
+    useEffect(() => {
+        animation.current?.play();
+    }, [])
+
+
     return (
         <Container>
             <Location>London,
                 <Country> United Kingdom</Country>
             </Location>
-            <WeatherImage source={sun} />
+            <LottieView autoPlay style={{ width: 250, height: 250, marginBottom: 0 }} source={require('../../assets/icons/fill/lottie/snow.json')} />
             <TempText>21°C</TempText>
             <WeatherText>thunderstorm</WeatherText>
             <Date>Friday 16 . 09.41am</Date>
@@ -32,6 +40,7 @@ const TempText = styled.Text`
     color: white;
     font-size: 68px;
     padding: 0 0;
+    margin-top: 0;
 `
 const WeatherText = styled.Text`
     color: white;
@@ -49,9 +58,4 @@ const Container = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
-const WeatherImage = styled.Image`
-    margin-top: 25px;
-    height: 200px;
-    width: 200px;
 `
