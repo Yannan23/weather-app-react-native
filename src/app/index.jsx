@@ -13,7 +13,7 @@ const Index = () => {
     return (
         <View style={{ flex: 1 }}>
             <LinearGradient
-                colors={['#d59f29', '#301f70', '#060b19']} // Provide an array of colors
+                colors={['#d57f29', '#301f70', '#060b19']} // Provide an array of colors
                 locations={[0.2, 0.6, 0.8]}
                 style={{ flex: 1 }}
             >
