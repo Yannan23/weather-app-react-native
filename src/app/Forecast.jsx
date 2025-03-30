@@ -24,12 +24,16 @@ const Forecast = () => {
                 <LottieView autoPlay style={{ width: 200, height: 200 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
             </LottieContainer>
             <SafeArea>
-                <TouchableArea>
-                    <ArrowLeftCircleIcon size={30} color='white' />
-                    <Back>
-                        <Link href='/'>Back</Link>
-                    </Back>
-                </TouchableArea>
+                <TouchableContainer>
+                    <Link href='/'>
+                        <TouchableArea>
+                            <ArrowLeftCircleIcon size={30} color='white' />
+                            <Back>
+                                Back
+                            </Back>
+                        </TouchableArea>
+                    </Link>
+                </TouchableContainer>
                 <ThisWeekView>
                     <CalendarDaysIcon color='white' size={30} />
                     <ThisWeek>This Week</ThisWeek>
@@ -97,6 +101,41 @@ const Forecast = () => {
 
 export default Forecast
 
+const LottieContainer = styled.View`
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    right: 0;
+`
+const SafeArea = styled.SafeAreaView`
+    margin: 0px 16px;
+`
+const TouchableContainer = styled.TouchableOpacity`
+    margin-top: 16px;
+`
+const TouchableArea = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+`
+const Back = styled.Text`
+    color: white;
+    font-family: "Saira_Expanded-SemiBold";
+    font-size: 20px;
+`
+const ThisWeekView = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+`
+const ThisWeek = styled.Text`
+    color: white;
+    font-size: 24px;
+    font-family: 'Saira_Expanded-SemiBold';
+`
 const WeekWeather = styled.View`
     display: flex;
     flex-direction: row;
@@ -105,67 +144,24 @@ const WeekWeather = styled.View`
     border-bottom-color: #d3d3d351;
     border-bottom-width:1px
 `
-
 const Day = styled.Text`
     color: white;
     text-transform:capitalize;
     font-size: 16px;
 `
-
 const WeatherView = styled.View`
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 4px;
 `
-
 const Weather = styled.Text`
     color: white;
     font-size: 16px;
 
 `
-
 const Temp = styled.Text`
     color: white;
     font-size: 58px;
     font-family: 'Saira_SemiExpanded-Light';
-`
-
-const ThisWeekView = styled.View`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    margin-top: 32px;
-`
-
-const ThisWeek = styled.Text`
-    color: white;
-    font-size: 24px;
-    font-family: 'Saira_Expanded-SemiBold';
-`
-
-const LottieContainer = styled.View`
-    width: 150px;
-    height: 150px;
-    position: absolute;
-    right: 0;
-`
-
-const SafeArea = styled.SafeAreaView`
-    margin: 0px 16px;
-`
-
-const TouchableArea = styled.TouchableOpacity`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-`
-
-const Back = styled.Text`
-    color: white;
-    font-family: "Saira_Expanded-SemiBold";
-    font-size: 20px;
 `
