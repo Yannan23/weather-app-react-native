@@ -1,15 +1,22 @@
 import { View, Image, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components/native'
 import { MagnifyingGlassIcon, ArrowUpRightIcon } from 'react-native-heroicons/outline'
 import { useFonts } from 'expo-font'
+import Greeting from './components/Greeting'
 
 const SearchBar = () => {
     const [showSearch, toggleShowSearch] = useState(false)
+    const [locations, setLocations] = useState('')
 
     const [fontsloaded] = useFonts({
         'Saira_Expanded-SemiBold': require('../../../../assets/fonts/Saira_Expanded-SemiBold.ttf'),
         'Saira_SemiExpanded-Light': require('../../../../assets/fonts/Saira_SemiExpanded-Light.ttf'), // Ensure case matches
+        'Saira_Condensed-SemiBold': require('../../../../assets/fonts/Saira_Condensed-SemiBold.ttf'), // Ensure case matches
+        'Saira-SemiBold': require('../../../../assets/fonts/Saira-SemiBold.ttf'), // Ensure case matches
+        'Saira-Regular': require('../../../../assets/fonts/Saira-Regular.ttf'), // Ensure case matches
+        'Saira_Expanded-Thin': require('../../../../assets/fonts/Saira_Expanded-Thin.ttf'), // Ensure case matches
+
     })
 
     if (!fontsloaded) {
@@ -23,13 +30,7 @@ const SearchBar = () => {
                     showSearch ? (
                         <InputText placeholder='Search City' placeholderTextColor={'lightgray'} />
                     ) : (
-                        <View>
-                            <CityContainer>
-                                <City>Jakata</City>
-                                <ArrowUpRightIcon size={15} color='white' />
-                            </CityContainer>
-                            <Greeting>Good Morning</Greeting>
-                        </View>
+                        <Greeting />
                     )
 
                 }
@@ -37,31 +38,13 @@ const SearchBar = () => {
                     <MagnifyingGlassIcon color='white' size='25px' />
                 </MagnifyingIconContainer>
             </Container >
+
         </>
 
     )
 }
 
-const CityContainer = styled.View`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-`
 
-const City = styled.Text`
-    color: white;
-    font-family: 'Saira_SemiExpanded-Light';
-    font-size: 20px;
-    margin-left:4px;
-    margin-right:4px;
-`
-
-const Greeting = styled.Text`
-    color: white;
-    margin-left:4px;
-    font-size: 24px;
-    font-family: 'Saira_Expanded-SemiBold';
-`
 
 const Container = styled.View`
     color: white;
@@ -71,12 +54,14 @@ const Container = styled.View`
     display: flex;
     flex-direction: row;
     align-items: top;
+    height: 60px;
     ${(props) => {
         switch (props.variant) {
             case true:
                 return css`
                     border: 1px solid white;
                     justify-content:flex-end;
+                    transition: ease-in-out;
                 `;
             case false:
                 return css`
