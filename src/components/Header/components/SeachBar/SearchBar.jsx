@@ -9,19 +9,19 @@ const SearchBar = () => {
     const [showSearch, toggleShowSearch] = useState(false)
     const [locations, setLocations] = useState('')
 
-    const [fontsloaded] = useFonts({
-        'Saira_Expanded-SemiBold': require('../../../../assets/fonts/Saira_Expanded-SemiBold.ttf'),
-        'Saira_SemiExpanded-Light': require('../../../../assets/fonts/Saira_SemiExpanded-Light.ttf'), // Ensure case matches
-        'Saira_Condensed-SemiBold': require('../../../../assets/fonts/Saira_Condensed-SemiBold.ttf'), // Ensure case matches
-        'Saira-SemiBold': require('../../../../assets/fonts/Saira-SemiBold.ttf'), // Ensure case matches
-        'Saira-Regular': require('../../../../assets/fonts/Saira-Regular.ttf'), // Ensure case matches
-        'Saira_Expanded-Thin': require('../../../../assets/fonts/Saira_Expanded-Thin.ttf'), // Ensure case matches
+    // const [fontsloaded] = useFonts({
+    //     'Saira_Expanded-SemiBold': require('../../../../assets/fonts/Saira_Expanded-SemiBold.ttf'),
+    //     'Saira_SemiExpanded-Light': require('../../../../assets/fonts/Saira_SemiExpanded-Light.ttf'), // Ensure case matches
+    //     'Saira_Condensed-SemiBold': require('../../../../assets/fonts/Saira_Condensed-SemiBold.ttf'), // Ensure case matches
+    //     'Saira-SemiBold': require('../../../../assets/fonts/Saira-SemiBold.ttf'), // Ensure case matches
+    //     'Saira-Regular': require('../../../../assets/fonts/Saira-Regular.ttf'), // Ensure case matches
+    //     'Saira_Expanded-Thin': require('../../../../assets/fonts/Saira_Expanded-Thin.ttf'), // Ensure case matches
 
-    })
+    // })
 
-    if (!fontsloaded) {
-        return undefined
-    }
+    // if (!fontsloaded) {
+    //     return undefined
+    // }
 
     return (
         <>
