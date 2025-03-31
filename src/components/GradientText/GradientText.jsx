@@ -13,7 +13,7 @@ const GradientText = ({ children, style }) => {
             }
         >
             <LinearGradient
-                colors={['#DF8908', '#B415FF']}
+                colors={['#b415ff', '#DF8908']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
                 style={{ height: 40, width: '100%' }}
@@ -30,4 +30,8 @@ const MaskText = styled.Text`
     height: 40px;
     font-size: 24px;
     font-family: 'Saira-Regular';
+    &:hover:{
+        transition: ease-in-out;
+        font-size: 32px;
+    }
 `

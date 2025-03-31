@@ -1,23 +1,18 @@
 import { View, Text, Image } from 'react-native'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import sun from '../../assets/images/partlycloudy.png'
-import LottieView from 'lottie-react-native';
+// import LottieView from 'lottie-react-native';
 
 const CurrentWeather = () => {
-    const animation = useRef < LottieView > (null);
-
-    useEffect(() => {
-        animation.current?.play();
-    }, [])
-
 
     return (
         <Container>
             <Location>London,
                 <Country> United Kingdom</Country>
             </Location>
-            <LottieView autoPlay style={{ width: 250, height: 250, marginBottom: 0 }} source={require('/Users/yannansun/code/WeatherApp/src/assets/icons/lottie/clear-day.json')} />
+            <WeatherImage source={sun} />
+            {/* <LottieView autoPlay style={{ width: 250, height: 250, marginBottom: 0 }} source={require('/Users/yannansun/code/WeatherApp/src/assets/icons/lottie/clear-day.json')} /> */}
             <TempText>21°C</TempText>
             <WeatherText>thunderstorm</WeatherText>
             <Date>Friday 16 . 09.41am</Date>
@@ -26,6 +21,12 @@ const CurrentWeather = () => {
 }
 
 export default CurrentWeather
+
+const WeatherImage = styled.Image`
+    width: 220px;
+    height: 220px;
+    margin-top: 12px;
+`
 
 const Country = styled.Text`
     font-size: 18px;
@@ -58,4 +59,5 @@ const Container = styled.View`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 12px;
 `
