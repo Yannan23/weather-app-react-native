@@ -17,7 +17,7 @@ const CurrentWeather = () => {
             <Location>London,
                 <Country> United Kingdom</Country>
             </Location>
-            <LottieView autoPlay style={{ width: 250, height: 250, marginBottom: 0 }} source={require('../../assets/icons/fill/lottie/snow.json')} />
+            <LottieView autoPlay style={{ width: 250, height: 250, marginBottom: 0 }} source={require('/Users/yannansun/code/WeatherApp/src/assets/icons/lottie/clear-day.json')} />
             <TempText>21°C</TempText>
             <WeatherText>thunderstorm</WeatherText>
             <Date>Friday 16 . 09.41am</Date>

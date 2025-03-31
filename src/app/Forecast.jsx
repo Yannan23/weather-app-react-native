@@ -21,7 +21,7 @@ const Forecast = () => {
             style={{ flex: 1 }}
         >
             <LottieContainer>
-                <LottieView autoPlay style={{ width: 200, height: 200 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                <LottieView autoPlay style={{ width: 200, height: 200 }} source={require('../assets/icons/lottie/snow.json')} />
             </LottieContainer>
             <SafeArea>
                 <TouchableContainer>
@@ -41,7 +41,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -49,7 +49,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -57,7 +57,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -65,7 +65,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -73,7 +73,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -81,7 +81,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>
@@ -89,7 +89,7 @@ const Forecast = () => {
                 <WeekWeather>
                     <Day>sun</Day>
                     <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/fill/lottie/extreme-day-rain.json')} />
+                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../assets/icons/lottie/clear-day.json')} />
                         <Weather>rainy</Weather>
                     </WeatherView>
                     <Temp>17°</Temp>

@@ -3,16 +3,19 @@ import React from 'react'
 import { Link } from 'expo-router'
 import styled from 'styled-components/native'
 import { ArrowRightCircleIcon } from 'react-native-heroicons/solid'
+import GradientText from '../GradientText/GradientText'
 
 const NextDaysButton = () => {
     return (
         <TouchableOpacity>
-            <Container>
-                <ButtonText>
-                    <Link href='/Forecast'>NextDays</Link>
-                </ButtonText>
-                <ArrowRightCircleIcon size={25} color='white' />
-            </Container>
+            <Link href='/Forecast'>
+                <Container>
+                    <View style={{ textAlign: 'center', width: 120 }}>
+                        <GradientText>Next days</GradientText>
+                    </View>
+                    <ArrowRightCircleIcon size={25} color='white' />
+                </Container>
+            </Link>
         </TouchableOpacity>
     )
 }
@@ -23,10 +26,7 @@ const Container = styled.View`
     margin: auto;
     display: flex;
     flex-direction: row;
+    width: 100%;
     align-items: center;
-    gap: 4px;
-    margin-top: 16px;
-`
-const ButtonText = styled.Text`
-    color: white;
+    justify-content: center;
 `
