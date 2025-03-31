@@ -1,37 +1,33 @@
-import React from 'react';
-import { Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text } from 'react-native'
+import React from 'react'
 import MaskedView from '@react-native-masked-view/masked-view';
+import { LinearGradient } from 'expo-linear-gradient';
+import styled from 'styled-components/native';
+
 
 const GradientText = ({ children, style }) => {
     return (
         <MaskedView
             maskElement={
-                <Text
-                    style={[
-                        style,
-                        {
-                            // fontWeight: 'bold',
-                            fontSize: 24,
-                            color: 'black', // This helps with masking
-                            backgroundColor: 'transparent',
-                            lineHeight: 60,
-                            fontFamily: 'Saira-Regular'
-                        },
-                    ]}
-                >
-                    {children}
-                </Text>
+                <MaskText>{children}</MaskText>
             }
         >
             <LinearGradient
-                colors={['#B415FF', '#DF8908']}
+                colors={['#DF8908', '#B415FF']}
                 start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
-                style={{ width: '100%', height: 60 }} // Ensure gradient covers the text area
+                end={{ x: 1, y: 1 }}
+                style={{ height: 40, width: '100%' }}
             />
         </MaskedView>
-    );
-};
+    )
+}
 
-export default GradientText;
+export default GradientText
+
+const MaskText = styled.Text`
+    color: black;
+    background-color: transparent;
+    height: 40px;
+    font-size: 24px;
+    font-family: 'Saira-Regular';
+`
