@@ -2,13 +2,10 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import styled, { useTheme } from 'styled-components/native'
 import sun from '../../assets/images/partlycloudy.png'
-// import LottieView from 'lottie-react-native';
 import { Link } from 'expo-router'
-import { ArrowRightCircleIcon } from 'react-native-heroicons/solid'
 import GradientText from '../GradientText'
-import { CalendarDaysIcon, ChevronDownIcon } from 'react-native-heroicons/solid'
+import { CalendarDaysIcon, ArrowRightCircleIcon, ChevronDownIcon, ChevronUpIcon } from 'react-native-heroicons/solid'
 import LottieView from 'lottie-react-native'
-
 
 const CurrentWeather = () => {
     const theme = useTheme()
@@ -47,67 +44,96 @@ const CurrentWeather = () => {
             )}
             {/* weather details */}
             <WeatherDetails>
-                <TodayView>
-                    <CalendarDaysIcon size={25} color='white' />
-                    <Today>Today</Today>
-                </TodayView>
-                <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: 15, gap: 8 }} showsHorizontalScrollIndicator={false}>
-                    <WeatherView>
-                        <Time>Now</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>7am</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>8am</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>9am</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>10am</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>Now</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>Now</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                    <WeatherView>
-                        <Time>Now</Time>
-                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Temp>19°C</Temp>
-                    </WeatherView>
-                </ScrollView>
-                <Details onPress={() => setIsShown(!isShown)}>
-                    {isShown && (
+                {/* details rows */}
+                <DetailRow>
+                    <View>
+                        <WeatherCondition>Air Auality</WeatherCondition>
+                        <WeatherConditionText>60 Moderate</WeatherConditionText>
+                    </View>
+                    <View>
+                        <WeatherCondition>Humidity</WeatherCondition>
+                        <WeatherConditionText>87%</WeatherConditionText>
+                    </View>
+                </DetailRow>
+                <DetailRow>
+                    <View>
+                        <WeatherCondition>Pricipitation</WeatherCondition>
+                        <WeatherConditionText>87%</WeatherConditionText>
+                    </View>
+                    <View>
+                        <WeatherCondition>Light Rain</WeatherCondition>
+                        <WeatherConditionText>34%</WeatherConditionText>
+                    </View>
+                </DetailRow>
+                {/* today weather view */}
+                {!isShown && (
+                    <>
+                        <TodayView>
+                            <CalendarDaysIcon size={25} color='white' />
+                            <Today>Today</Today>
+                        </TodayView>
+                        <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }} showsHorizontalScrollIndicator={false}>
+                            <WeatherView>
+                                <Time>Now</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>7am</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>8am</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>9am</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>10am</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>Now</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>Now</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                            <WeatherView>
+                                <Time>Now</Time>
+                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                <Temp>19°C</Temp>
+                            </WeatherView>
+                        </ScrollView>
+                    </>
+                )}
+                {isShown && (
+                    <Details onPress={() => setIsShown(!isShown)}>
                         <>
                             <DetailsText>More details</DetailsText>
-                            <ChevronDownIcon size={20} color={theme.bgWhite(0.8)} />
+                            <ChevronUpIcon size={20} color={theme.bgWhite(0.8)} />
                         </>
-                    )}
+                    </Details>
+                )}
 
-                    {!isShown && (
+
+                {!isShown && (
+                    <Details onPress={() => setIsShown(!isShown)}>
                         <>
-                            <DetailsText>More details</DetailsText>
+                            <DetailsText>Back</DetailsText>
                             <ChevronDownIcon size={20} color={theme.bgWhite(0.8)} />
                         </>
-                    )}
-                </Details>
+                    </Details>
+                )}
             </WeatherDetails>
         </>
     )
@@ -120,7 +146,6 @@ const WeatherImage = styled.Image`
     height: 220px;
     margin-top: 12px;
 `
-
 const Country = styled.Text`
     font-size: 18px;
 `
@@ -154,7 +179,6 @@ const Container = styled.View`
     align-items: center;
     margin-bottom: 12px;
 `
-
 const ButtonContainer = styled.View`
     margin: auto;
     display: flex;
@@ -167,7 +191,6 @@ const GradientView = styled.View`
     width: 120px;
     text-align: center;
 `
-
 const WeatherDetails = styled.View`
     gap: 12px;
 `
@@ -212,4 +235,23 @@ const Details = styled.TouchableOpacity`
 `
 const DetailsText = styled.Text`
     color: ${(props) => props.theme.bgWhite(0.8)};
+`
+const DetailRow = styled.View`
+    margin: 0px 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom-color: ${(props) => props.theme.bgWhite(0.1)};
+    border-bottom-width:1px;
+    padding: 12px 0;
+`
+const WeatherCondition = styled.Text`
+    color: ${(props) => props.theme.bgWhite(0.6)};
+    font-family: 'Saira_Expanded-Thin';
+    font-size: 16px;
+`
+const WeatherConditionText = styled.Text`
+    color: white;
+    font-size: 20px;
+    font-family: 'Saira-Regular';
 `

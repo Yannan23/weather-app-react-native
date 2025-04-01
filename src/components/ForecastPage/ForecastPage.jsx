@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useRef } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
 import { ArrowLeftCircleIcon, CalendarDaysIcon } from 'react-native-heroicons/solid'
 import { LinearGradient } from 'expo-linear-gradient';
 import { Link } from 'expo-router'
@@ -136,7 +135,7 @@ const WeekWeather = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom-color: #d3d3d351;
+    border-bottom-color: ${(props) => props.theme.bgWhite(0.1)};
     border-bottom-width:1px
 `
 const Day = styled.Text`
