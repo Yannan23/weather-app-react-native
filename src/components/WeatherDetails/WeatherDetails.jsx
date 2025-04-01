@@ -7,7 +7,6 @@ import OtherDetails from './components/OtherDetails'
 const WeatherDetails = () => {
     return (
         <Container>
-            <Text>WeatherDetails</Text>
             <HourlyWeather />
             <OtherDetails />
         </Container>
@@ -17,5 +16,5 @@ const WeatherDetails = () => {
 export default WeatherDetails
 
 const Container = styled.View`
-    margin: auto;
+    /* margin: auto; */
 `

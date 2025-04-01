@@ -3,7 +3,7 @@ import React from 'react'
 import { Link } from 'expo-router'
 import styled from 'styled-components/native'
 import { ArrowRightCircleIcon } from 'react-native-heroicons/solid'
-import GradientText from '../GradientText'
+import GradientText from './components/GradientText'
 
 const NextDaysButton = () => {
     return (
