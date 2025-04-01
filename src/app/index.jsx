@@ -4,10 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import SearchBar from '../components/Header/components/SeachBar';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../theme'
-import styled from 'styled-components/native';
 import CurrentWeather from '../components/CurrentWeather';
-import NextDaysButton from '../components/NextDaysButton/NextDaysButton';
-import WeatherDetails from '../components/WeatherDetails';
 import { useFonts } from 'expo-font'
 
 
@@ -35,14 +32,8 @@ const Index = () => {
             >
                 <SafeAreaView>
                     <ThemeProvider theme={theme}>
-                        <View>
-                            <View>
-                                <SearchBar />
-                            </View>
-                            <CurrentWeather />
-                            <NextDaysButton />
-                            <WeatherDetails />
-                        </View>
+                        <SearchBar />
+                        <CurrentWeather />
                     </ThemeProvider>
                 </SafeAreaView>
             </LinearGradient>

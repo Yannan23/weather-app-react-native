@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components/native'
-import { MagnifyingGlassIcon, ArrowUpRightIcon } from 'react-native-heroicons/outline'
+import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
 import Greeting from './components/Greeting'
 
 const SearchBar = () => {
@@ -15,8 +15,7 @@ const SearchBar = () => {
                         <InputText placeholder='Search City' placeholderTextColor={'lightgray'} />
                     ) : (
                         <Greeting />
-                    )
-                }
+                    )}
                 <MagnifyingIconContainer onPress={() => toggleShowSearch(!showSearch)}>
                     <MagnifyingGlassIcon color='white' size='25px' />
                 </MagnifyingIconContainer>
@@ -24,6 +23,8 @@ const SearchBar = () => {
         </>
     )
 }
+
+export default SearchBar
 
 const Container = styled.View`
     color: white;
@@ -56,7 +57,6 @@ const InputText = styled.TextInput`
     font-size: 24px;
     flex-grow: 1;
 `
-
 const MagnifyingIconContainer = styled.TouchableOpacity`
     background-color: ${(props) => props.theme.bgWhite(0.2)};
     width: 50px;
@@ -65,5 +65,3 @@ const MagnifyingIconContainer = styled.TouchableOpacity`
     padding: 12px;
     margin:4px;
 `
-
-export default SearchBar

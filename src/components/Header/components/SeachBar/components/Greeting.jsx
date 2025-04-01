@@ -16,14 +16,18 @@ const Greeting = () => {
     }
 
     return (
-        <View>
+        <GreetingView>
             <GreetingText>{greeting}</GreetingText>
-        </View>
+        </GreetingView>
     )
 }
 
 export default Greeting
 
+const GreetingView = styled.View`
+    /* display: flex; */
+    justify-content: flex-end;
+`
 const GreetingText = styled.Text`
     color: ${(props) => props.theme.bgWhite(0.5)};
     font-size: 24px;
