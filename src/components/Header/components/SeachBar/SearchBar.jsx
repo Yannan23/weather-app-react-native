@@ -1,27 +1,11 @@
-import { View, Image, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import styled, { css } from 'styled-components/native'
-import { MagnifyingGlassIcon, ArrowUpRightIcon } from 'react-native-heroicons/outline'
-import { useFonts } from 'expo-font'
+import { MagnifyingGlassIcon } from 'react-native-heroicons/outline'
 import Greeting from './components/Greeting'
 
 const SearchBar = () => {
     const [showSearch, toggleShowSearch] = useState(false)
     const [locations, setLocations] = useState('')
-
-    // const [fontsloaded] = useFonts({
-    //     'Saira_Expanded-SemiBold': require('../../../../assets/fonts/Saira_Expanded-SemiBold.ttf'),
-    //     'Saira_SemiExpanded-Light': require('../../../../assets/fonts/Saira_SemiExpanded-Light.ttf'), // Ensure case matches
-    //     'Saira_Condensed-SemiBold': require('../../../../assets/fonts/Saira_Condensed-SemiBold.ttf'), // Ensure case matches
-    //     'Saira-SemiBold': require('../../../../assets/fonts/Saira-SemiBold.ttf'), // Ensure case matches
-    //     'Saira-Regular': require('../../../../assets/fonts/Saira-Regular.ttf'), // Ensure case matches
-    //     'Saira_Expanded-Thin': require('../../../../assets/fonts/Saira_Expanded-Thin.ttf'), // Ensure case matches
-
-    // })
-
-    // if (!fontsloaded) {
-    //     return undefined
-    // }
 
     return (
         <>
@@ -31,20 +15,16 @@ const SearchBar = () => {
                         <InputText placeholder='Search City' placeholderTextColor={'lightgray'} />
                     ) : (
                         <Greeting />
-                    )
-
-                }
+                    )}
                 <MagnifyingIconContainer onPress={() => toggleShowSearch(!showSearch)}>
                     <MagnifyingGlassIcon color='white' size='25px' />
                 </MagnifyingIconContainer>
             </Container >
-
         </>
-
     )
 }
 
-
+export default SearchBar
 
 const Container = styled.View`
     color: white;
@@ -60,6 +40,7 @@ const Container = styled.View`
             case true:
                 return css`
                     border: 1px solid white;
+                    background-color: ${(props) => props.theme.bgWhite(0.1)};
                     justify-content:flex-end;
                     transition: ease-in-out;
                 `;
@@ -76,7 +57,6 @@ const InputText = styled.TextInput`
     font-size: 24px;
     flex-grow: 1;
 `
-
 const MagnifyingIconContainer = styled.TouchableOpacity`
     background-color: ${(props) => props.theme.bgWhite(0.2)};
     width: 50px;
@@ -85,5 +65,3 @@ const MagnifyingIconContainer = styled.TouchableOpacity`
     padding: 12px;
     margin:4px;
 `
-
-export default SearchBar
