@@ -1,7 +1,6 @@
-import { View, Text, SafeAreaView } from 'react-native';
+import { View, SafeAreaView } from 'react-native';
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import SearchBar from '../components/Header/components/SeachBar';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../theme'
 import CurrentWeather from '../components/CurrentWeather';
@@ -32,7 +31,6 @@ const Index = () => {
             >
                 <SafeAreaView>
                     <ThemeProvider theme={theme}>
-                        <SearchBar />
                         <CurrentWeather />
                     </ThemeProvider>
                 </SafeAreaView>
