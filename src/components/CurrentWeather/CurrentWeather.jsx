@@ -31,8 +31,9 @@ const CurrentWeather = () => {
                 {locations.length > 0 && showSearch ? (
                     <Locations>
                         {locations.map((loc, index) => {
+                            let showBorder = index + 1 !== locations.length
                             return (
-                                <LocationList key={index}>
+                                <LocationList variant={showBorder} key={index}>
                                     <MapPinIcon color='black' size={25} />
                                     <Text>London, United Kingdom</Text>
                                 </LocationList>
@@ -225,7 +226,12 @@ const LocationList = styled.TouchableOpacity`
     gap:10px;
     padding: 12px;
     align-items: center; 
-    
+    ${({ variant }) =>
+        variant && css`
+            border-bottom-color: lightgray;
+            border-bottom-width: 1px;
+        `
+    }
    
 `
 const WeatherImage = styled.Image`
