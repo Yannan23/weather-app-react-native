@@ -1,12 +1,16 @@
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
-import styled, { css, useTheme } from 'styled-components/native'
-import sun from '../../assets/images/partlycloudy.png'
 import { Link } from 'expo-router'
-import GradientText from '../GradientText'
+import React, { useCallback, useState } from 'react'
+import styled, { css, useTheme } from 'styled-components/native'
 import { CalendarDaysIcon, ArrowRightCircleIcon, ChevronDownIcon, ChevronUpIcon, MapPinIcon, MagnifyingGlassIcon } from 'react-native-heroicons/solid'
 import LottieView from 'lottie-react-native'
+import { debounce } from 'lodash';
+
 import Greeting from './components/Greeting'
+import GradientText from '../GradientText'
+import sun from '../../assets/images/partlycloudy.png'
+
+
 
 const CurrentWeather = () => {
     const theme = useTheme()
@@ -14,13 +18,19 @@ const CurrentWeather = () => {
     const [showSearch, toggleShowSearch] = useState(false)
     const [locations, setLocations] = useState([1, 2, 3])
 
+    const handleSearch = (val) => {
+        console.log("val:", val);
+    }
+
+    const handleTextDebounce = useCallback(debounce(handleSearch, 1200), [])
+
     return (
         <>
             <Header>
                 <SearchContainer variant={showSearch} >
                     {
                         showSearch ? (
-                            <InputText placeholder='Search City' placeholderTextColor={'lightgray'} />
+                            <InputText placeholder='Search City' placeholderTextColor={'lightgray'} onChangeText={handleTextDebounce} />
                         ) : (
                             <Greeting />
                         )}
