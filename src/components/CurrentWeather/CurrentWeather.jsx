@@ -4,25 +4,55 @@ import React, { useCallback, useState } from 'react'
 import styled, { css, useTheme } from 'styled-components/native'
 import { CalendarDaysIcon, ArrowRightCircleIcon, ChevronDownIcon, ChevronUpIcon, MapPinIcon, MagnifyingGlassIcon } from 'react-native-heroicons/solid'
 import LottieView from 'lottie-react-native'
-import { debounce } from 'lodash';
 
 import Greeting from './components/Greeting'
 import GradientText from '../GradientText'
 import sun from '../../assets/images/partlycloudy.png'
-
+import { debounce } from 'lodash';
+import { fetchCoordinates, fetchLocations, fetchWeatherForecast } from '../../api/weather';
 
 
 const CurrentWeather = () => {
     const theme = useTheme()
     const [isShown, setIsShown] = useState(true)
     const [showSearch, toggleShowSearch] = useState(false)
-    const [locations, setLocations] = useState([1, 2, 3])
+    const [locations, setLocations] = useState([])
+    const [location, setLocation] = useState('')
+    const [weather, setWeather] = useState({})
+    const [coordinates, setCoordinates] = useState([])
 
-    const handleSearch = (val) => {
-        console.log("val:", val);
+    const handleSearch = (value) => {
+        if (value.length > 2) {
+            fetchLocations({ cityName: value }).then(data => {
+                setLocations(data);
+            })
+        }
     }
 
     const handleTextDebounce = useCallback(debounce(handleSearch, 1200), [])
+
+    const handleLocation = async (loc) => {
+        setLocations([]);
+        toggleShowSearch(false);
+        fetchCoordinates({ cityName: loc.name }).then(data => {
+            // console.log(data);
+            setLocation(data)
+            setCoordinates(data)
+        })
+
+        // const coordinatesData =
+
+        await fetchWeatherForecast({ lat: coordinates[0].lat, lon: coordinates[0].lon }).then(data => {
+            setWeather(data)
+        })
+    }
+
+    const { current, hourly, daily } = weather
+
+    const convertKelvinToCelsius = (kelvin) => {
+        return kelvin - 273.15;
+    }
+
 
     return (
         <>
@@ -43,9 +73,9 @@ const CurrentWeather = () => {
                         {locations.map((loc, index) => {
                             let showBorder = index + 1 !== locations.length
                             return (
-                                <LocationList variant={showBorder} key={index}>
+                                <LocationList variant={showBorder} key={index} onPress={() => handleLocation(loc)}>
                                     <MapPinIcon color='black' size={25} />
-                                    <Text>London, United Kingdom</Text>
+                                    <Text>{loc?.name}, {loc?.country}</Text>
                                 </LocationList>
                             )
                         })}
@@ -55,14 +85,16 @@ const CurrentWeather = () => {
 
             {/* Current weather */}
             <Container>
-                <Location>London,
-                    <Country> United Kingdom</Country>
+                <Location>{location[0]?.name},
+                    <Country> {location[0]?.country}</Country>
                 </Location>
                 <WeatherImage source={sun} />
                 {isShown && (
                     <>
-                        <TempText>21°C</TempText>
-                        <WeatherText>thunderstorm</WeatherText>
+                        {/* {convertKelvinToCelsius(current.temp).toFixed(0)} */}
+                        <TempText>°C</TempText>
+                        {/* {current.weather[0].main} */}
+                        <WeatherText></WeatherText>
                         <Date>Friday 16 . 09.41am</Date>
                     </>
                 )
@@ -92,13 +124,15 @@ const CurrentWeather = () => {
                     </View>
                     <View>
                         <WeatherCondition>Humidity</WeatherCondition>
-                        <WeatherConditionText>87%</WeatherConditionText>
+                        {/* {weatherList[1].main.humidity} */}
+                        <WeatherConditionText>%</WeatherConditionText>
                     </View>
                 </DetailRow>
                 <DetailRow>
                     <View>
-                        <WeatherCondition>Pricipitation</WeatherCondition>
-                        <WeatherConditionText>87%</WeatherConditionText>
+                        <WeatherCondition>Wind</WeatherCondition>
+                        {/* {weatherList[1].wind.speed} */}
+                        <WeatherConditionText>km/h</WeatherConditionText>
                     </View>
                     <View>
                         <WeatherCondition>Light Rain</WeatherCondition>
