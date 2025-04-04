@@ -34,17 +34,20 @@ const CurrentWeather = () => {
     const handleLocation = async (loc) => {
         setLocations([]);
         toggleShowSearch(false);
-        fetchCoordinates({ cityName: loc.name }).then(data => {
-            // console.log(data);
-            setLocation(data)
-            setCoordinates(data)
-        })
 
-        // const coordinatesData =
+        try {
+            const coordData = await fetchCoordinates({ cityName: loc.name });
+            setLocation(coordData);
+            setCoordinates(coordData);
 
-        await fetchWeatherForecast({ lat: coordinates[0].lat, lon: coordinates[0].lon }).then(data => {
-            setWeather(data)
-        })
+            const weatherData = await fetchWeatherForecast({
+                lat: coordData[0].lat,
+                lon: coordData[0].lon,
+            });
+            setWeather(weatherData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     }
 
     const { current, hourly, daily } = weather
@@ -91,8 +94,8 @@ const CurrentWeather = () => {
                 <WeatherImage source={sun} />
                 {isShown && (
                     <>
-                        {/* {convertKelvinToCelsius(current.temp).toFixed(0)} */}
-                        <TempText>°C</TempText>
+                        {/* {convertKelvinToCelsius(current?.temp).toFixed(0)} */}
+                        <TempText>{convertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
                         {/* {current.weather[0].main} */}
                         <WeatherText></WeatherText>
                         <Date>Friday 16 . 09.41am</Date>
@@ -124,15 +127,15 @@ const CurrentWeather = () => {
                     </View>
                     <View>
                         <WeatherCondition>Humidity</WeatherCondition>
-                        {/* {weatherList[1].main.humidity} */}
+                        {/* {current.humidity} */}
                         <WeatherConditionText>%</WeatherConditionText>
                     </View>
                 </DetailRow>
                 <DetailRow>
                     <View>
                         <WeatherCondition>Wind</WeatherCondition>
-                        {/* {weatherList[1].wind.speed} */}
-                        <WeatherConditionText>km/h</WeatherConditionText>
+                        {/* {current.wind_speed} */}
+                        <WeatherConditionText>m/s</WeatherConditionText>
                     </View>
                     <View>
                         <WeatherCondition>Light Rain</WeatherCondition>
