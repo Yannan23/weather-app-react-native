@@ -9,7 +9,7 @@ import { debounce } from 'lodash';
 import Greeting from './components/Greeting'
 import GradientText from '../GradientText'
 import sun from '../../assets/images/partlycloudy.png'
-
+import { fetchLocations } from '../../api/weather'
 
 
 const CurrentWeather = () => {
@@ -18,8 +18,13 @@ const CurrentWeather = () => {
     const [showSearch, toggleShowSearch] = useState(false)
     const [locations, setLocations] = useState([1, 2, 3])
 
-    const handleSearch = (val) => {
-        console.log("val:", val);
+    const handleSearch = (value) => {
+        if (value.length > 2) {
+            fetchLocations({ cityName: value }).then((data) => {
+                console.log("locations:", data);
+
+            })
+        }
     }
 
     const handleTextDebounce = useCallback(debounce(handleSearch, 1200), [])
