@@ -5,7 +5,7 @@ import styled, { css, useTheme } from 'styled-components/native'
 import { CalendarDaysIcon, ArrowRightCircleIcon, ChevronDownIcon, ChevronUpIcon, MapPinIcon, MagnifyingGlassIcon } from 'react-native-heroicons/solid'
 import LottieView from 'lottie-react-native'
 import * as Location from 'expo-location';
-
+import * as Progress from 'react-native-progress';
 
 import Greeting from './components/Greeting'
 import GradientText from '../GradientText'
@@ -22,8 +22,7 @@ const CurrentWeather = () => {
     const [location, setLocation] = useState('')
     const [weather, setWeather] = useState({})
     const [coordinates, setCoordinates] = useState([])
-    const [lat, setLat] = useState(0)
-    const [lon, setlon] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     const handleSearch = (value) => {
         if (value.length > 2) {
@@ -37,13 +36,12 @@ const CurrentWeather = () => {
 
     const handleLocation = async (loc) => {
         setLocations([]);
+        setLoading(true)
         toggleShowSearch(false);
 
         try {
             const coordData = await fetchCoordinates({ cityName: loc.name });
             setLocation(coordData);
-            // console.log(coordData);
-
             setCoordinates(coordData);
 
             const weatherData = await fetchWeatherForecast({
@@ -51,6 +49,7 @@ const CurrentWeather = () => {
                 lon: coordData[0].lon,
             });
             setWeather(weatherData);
+            setLoading(false)
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -75,6 +74,7 @@ const CurrentWeather = () => {
             // Fetch weather data
             const weatherData = await fetchWeatherForecast({ lat: latitude, lon: longitude });
             setWeather(weatherData);
+            setLoading(false)
 
             // Fetch location data
             await fetchCurrentLocationData(latitude, longitude); // Pass latitude and longitude
@@ -100,170 +100,187 @@ const CurrentWeather = () => {
 
 
     return (
+
         <>
-            <Header>
-                <SearchContainer variant={showSearch} >
-                    {
-                        showSearch ? (
-                            <InputText placeholder='Search City' placeholderTextColor={'lightgray'} onChangeText={handleTextDebounce} />
-                        ) : (
-                            <Greeting />
+            {loading ? (
+                <ProgressView>
+                    <Progress.CircleSnail color={['white']} size={150} />
+                    {/* <Text>Loading</Text> */}
+                </ProgressView>
+            ) : (
+                <View>
+                    <Header>
+                        <SearchContainer variant={showSearch} >
+                            {
+                                showSearch ? (
+                                    <InputText placeholder='Search City' placeholderTextColor={'lightgray'} onChangeText={handleTextDebounce} />
+                                ) : (
+                                    <Greeting />
+                                )}
+                            <MagnifyingIconContainer onPress={() => toggleShowSearch(!showSearch)}>
+                                <MagnifyingGlassIcon color='white' size={25} />
+                            </MagnifyingIconContainer>
+                        </SearchContainer >
+                        {locations.length > 0 && showSearch ? (
+                            <Locations>
+                                {locations.map((loc, index) => {
+                                    let showBorder = index + 1 !== locations.length
+                                    return (
+                                        <LocationList variant={showBorder} key={index} onPress={() => handleLocation(loc)}>
+                                            <MapPinIcon color='black' size={25} />
+                                            <Text>{loc?.name}, {loc?.country}</Text>
+                                        </LocationList>
+                                    )
+                                })}
+                            </Locations>
+                        ) : null}
+                    </Header>
+
+                    {/* Current weather */}
+                    <Container>
+                        <LocationView>{location[0]?.name},
+                            <Country> {location[0]?.country}</Country>
+                        </LocationView>
+                        <WeatherImage source={sun} />
+                        {isShown && (
+                            <>
+                                {/* {convertKelvinToCelsius(current?.temp).toFixed(0)} */}
+                                <TempText>{convertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
+                                {/* {current.weather[0].main} */}
+                                <WeatherText></WeatherText>
+                                <Date>Friday 16 . 09.41am</Date>
+                            </>
+                        )
+                        }
+
+                    </Container >
+                    {/* next days button */}
+                    {isShown && (
+                        <TouchableOpacity>
+                            <Link href='/Forecast'>
+                                <ButtonContainer>
+                                    <GradientView>
+                                        <GradientText>Next days</GradientText>
+                                    </GradientView>
+                                    <ArrowRightCircleIcon size={25} color='white' />
+                                </ButtonContainer>
+                            </Link>
+                        </TouchableOpacity>
+                    )}
+                    {/* weather details */}
+                    <WeatherDetails>
+                        {/* details rows */}
+                        <DetailRow>
+                            <View>
+                                <WeatherCondition>Air Auality</WeatherCondition>
+                                <WeatherConditionText>60 Moderate</WeatherConditionText>
+                            </View>
+                            <View>
+                                <WeatherCondition>Humidity</WeatherCondition>
+                                {/* {current.humidity} */}
+                                <WeatherConditionText>%</WeatherConditionText>
+                            </View>
+                        </DetailRow>
+                        <DetailRow>
+                            <View>
+                                <WeatherCondition>Wind</WeatherCondition>
+                                {/* {current.wind_speed} */}
+                                <WeatherConditionText>m/s</WeatherConditionText>
+                            </View>
+                            <View>
+                                <WeatherCondition>Light Rain</WeatherCondition>
+                                <WeatherConditionText>34%</WeatherConditionText>
+                            </View>
+                        </DetailRow>
+                        {/* today weather view */}
+                        {!isShown && (
+                            <>
+                                <TodayView>
+                                    <CalendarDaysIcon size={25} color='white' />
+                                    <Today>Today</Today>
+                                </TodayView>
+                                <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }} showsHorizontalScrollIndicator={false}>
+                                    <WeatherView>
+                                        <Time>Now</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>7am</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>8am</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>9am</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>10am</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>Now</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>Now</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                    <WeatherView>
+                                        <Time>Now</Time>
+                                        <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                        <Temp>19°C</Temp>
+                                    </WeatherView>
+                                </ScrollView>
+                            </>
                         )}
-                    <MagnifyingIconContainer onPress={() => toggleShowSearch(!showSearch)}>
-                        <MagnifyingGlassIcon color='white' size={25} />
-                    </MagnifyingIconContainer>
-                </SearchContainer >
-                {locations.length > 0 && showSearch ? (
-                    <Locations>
-                        {locations.map((loc, index) => {
-                            let showBorder = index + 1 !== locations.length
-                            return (
-                                <LocationList variant={showBorder} key={index} onPress={() => handleLocation(loc)}>
-                                    <MapPinIcon color='black' size={25} />
-                                    <Text>{loc?.name}, {loc?.country}</Text>
-                                </LocationList>
-                            )
-                        })}
-                    </Locations>
-                ) : null}
-            </Header>
+                        {isShown && (
+                            <Details onPress={() => setIsShown(!isShown)}>
+                                <>
+                                    <DetailsText>More details</DetailsText>
+                                    <ChevronUpIcon size={20} color={theme.bgWhite(0.8)} />
+                                </>
+                            </Details>
+                        )}
 
-            {/* Current weather */}
-            <Container>
-                <LocationView>{location[0]?.name},
-                    <Country> {location[0]?.country}</Country>
-                </LocationView>
-                <WeatherImage source={sun} />
-                {isShown && (
-                    <>
-                        {/* {convertKelvinToCelsius(current?.temp).toFixed(0)} */}
-                        <TempText>{convertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
-                        {/* {current.weather[0].main} */}
-                        <WeatherText></WeatherText>
-                        <Date>Friday 16 . 09.41am</Date>
-                    </>
-                )
-                }
 
-            </Container >
-            {/* next days button */}
-            {isShown && (
-                <TouchableOpacity>
-                    <Link href='/Forecast'>
-                        <ButtonContainer>
-                            <GradientView>
-                                <GradientText>Next days</GradientText>
-                            </GradientView>
-                            <ArrowRightCircleIcon size={25} color='white' />
-                        </ButtonContainer>
-                    </Link>
-                </TouchableOpacity>
+                        {!isShown && (
+                            <Details onPress={() => setIsShown(!isShown)}>
+                                <>
+                                    <DetailsText>Back</DetailsText>
+                                    <ChevronDownIcon size={20} color={theme.bgWhite(0.8)} />
+                                </>
+                            </Details>
+                        )}
+                    </WeatherDetails>
+                </View>
             )}
-            {/* weather details */}
-            <WeatherDetails>
-                {/* details rows */}
-                <DetailRow>
-                    <View>
-                        <WeatherCondition>Air Auality</WeatherCondition>
-                        <WeatherConditionText>60 Moderate</WeatherConditionText>
-                    </View>
-                    <View>
-                        <WeatherCondition>Humidity</WeatherCondition>
-                        {/* {current.humidity} */}
-                        <WeatherConditionText>%</WeatherConditionText>
-                    </View>
-                </DetailRow>
-                <DetailRow>
-                    <View>
-                        <WeatherCondition>Wind</WeatherCondition>
-                        {/* {current.wind_speed} */}
-                        <WeatherConditionText>m/s</WeatherConditionText>
-                    </View>
-                    <View>
-                        <WeatherCondition>Light Rain</WeatherCondition>
-                        <WeatherConditionText>34%</WeatherConditionText>
-                    </View>
-                </DetailRow>
-                {/* today weather view */}
-                {!isShown && (
-                    <>
-                        <TodayView>
-                            <CalendarDaysIcon size={25} color='white' />
-                            <Today>Today</Today>
-                        </TodayView>
-                        <ScrollView horizontal contentContainerStyle={{ paddingHorizontal: 20, gap: 8 }} showsHorizontalScrollIndicator={false}>
-                            <WeatherView>
-                                <Time>Now</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>7am</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>8am</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>9am</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>10am</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>Now</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>Now</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                            <WeatherView>
-                                <Time>Now</Time>
-                                <LottieView autoPlay style={{ width: 30, height: 30 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                                <Temp>19°C</Temp>
-                            </WeatherView>
-                        </ScrollView>
-                    </>
-                )}
-                {isShown && (
-                    <Details onPress={() => setIsShown(!isShown)}>
-                        <>
-                            <DetailsText>More details</DetailsText>
-                            <ChevronUpIcon size={20} color={theme.bgWhite(0.8)} />
-                        </>
-                    </Details>
-                )}
 
-
-                {!isShown && (
-                    <Details onPress={() => setIsShown(!isShown)}>
-                        <>
-                            <DetailsText>Back</DetailsText>
-                            <ChevronDownIcon size={20} color={theme.bgWhite(0.8)} />
-                        </>
-                    </Details>
-                )}
-            </WeatherDetails>
         </>
     )
 }
 
 export default CurrentWeather
 
+const ProgressView = styled.View`
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+`
 const Header = styled.View`
-        position: relative;
-        margin:0 8px;
-        z-index: 50;
+    position: relative;
+    margin:0 8px;
+    z-index: 50;
 `
 const SearchContainer = styled.View`
     color: white;
