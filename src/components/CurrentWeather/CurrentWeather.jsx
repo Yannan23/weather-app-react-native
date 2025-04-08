@@ -104,7 +104,7 @@ const CurrentWeather = () => {
         <>
             {loading ? (
                 <ProgressView>
-                    <Progress.CircleSnail color={['white']} size={150} />
+                    <Progress.CircleSnail thickness={10} color={['white', 'red']} size={150} />
                     {/* <Text>Loading</Text> */}
                 </ProgressView>
             ) : (
@@ -144,10 +144,8 @@ const CurrentWeather = () => {
                         <WeatherImage source={sun} />
                         {isShown && (
                             <>
-                                {/* {convertKelvinToCelsius(current?.temp).toFixed(0)} */}
                                 <TempText>{convertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
-                                {/* {current.weather[0].main} */}
-                                <WeatherText></WeatherText>
+                                <WeatherText>{current.weather[0].main}</WeatherText>
                                 <Date>Friday 16 . 09.41am</Date>
                             </>
                         )
@@ -177,15 +175,13 @@ const CurrentWeather = () => {
                             </View>
                             <View>
                                 <WeatherCondition>Humidity</WeatherCondition>
-                                {/* {current.humidity} */}
-                                <WeatherConditionText>%</WeatherConditionText>
+                                <WeatherConditionText>{current.humidity}%</WeatherConditionText>
                             </View>
                         </DetailRow>
                         <DetailRow>
                             <View>
                                 <WeatherCondition>Wind</WeatherCondition>
-                                {/* {current.wind_speed} */}
-                                <WeatherConditionText>m/s</WeatherConditionText>
+                                <WeatherConditionText>{current.wind_speed}m/s</WeatherConditionText>
                             </View>
                             <View>
                                 <WeatherCondition>Light Rain</WeatherCondition>
