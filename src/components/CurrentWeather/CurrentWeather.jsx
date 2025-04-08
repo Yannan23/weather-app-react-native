@@ -1,15 +1,17 @@
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native'
 import { Link } from 'expo-router'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled, { css, useTheme } from 'styled-components/native'
 import { CalendarDaysIcon, ArrowRightCircleIcon, ChevronDownIcon, ChevronUpIcon, MapPinIcon, MagnifyingGlassIcon } from 'react-native-heroicons/solid'
 import LottieView from 'lottie-react-native'
+import * as Location from 'expo-location';
+
 
 import Greeting from './components/Greeting'
 import GradientText from '../GradientText'
 import sun from '../../assets/images/partlycloudy.png'
 import { debounce } from 'lodash';
-import { fetchCoordinates, fetchLocations, fetchWeatherForecast } from '../../api/weather';
+import { fetchCoordinates, fetchLocations, fetchWeatherForecast, fetchCurrentLocation } from '../../api/weather';
 
 
 const CurrentWeather = () => {
@@ -20,6 +22,8 @@ const CurrentWeather = () => {
     const [location, setLocation] = useState('')
     const [weather, setWeather] = useState({})
     const [coordinates, setCoordinates] = useState([])
+    const [lat, setLat] = useState(0)
+    const [lon, setlon] = useState(0)
 
     const handleSearch = (value) => {
         if (value.length > 2) {
@@ -38,6 +42,8 @@ const CurrentWeather = () => {
         try {
             const coordData = await fetchCoordinates({ cityName: loc.name });
             setLocation(coordData);
+            // console.log(coordData);
+
             setCoordinates(coordData);
 
             const weatherData = await fetchWeatherForecast({
@@ -55,6 +61,42 @@ const CurrentWeather = () => {
     const convertKelvinToCelsius = (kelvin) => {
         return kelvin - 273.15;
     }
+
+    useEffect(() => {
+        fetchCurrentLocationWeatherData();
+    }, []);
+
+    const fetchCurrentLocationWeatherData = async () => {
+        try {
+            const data = await fetchCurrentLocation(); // Fetch current location
+            const latitude = data.coords.latitude;
+            const longitude = data.coords.longitude;
+
+            // Fetch weather data
+            const weatherData = await fetchWeatherForecast({ lat: latitude, lon: longitude });
+            setWeather(weatherData);
+
+            // Fetch location data
+            await fetchCurrentLocationData(latitude, longitude); // Pass latitude and longitude
+        } catch (error) {
+            console.error("Error fetching weather or location data:", error);
+        }
+    };
+
+    const fetchCurrentLocationData = async (latitude, longitude) => {
+        try {
+            const address = await Location.reverseGeocodeAsync({ latitude, longitude });
+            const locationInfo = address[0];
+            const cityName = locationInfo.city || locationInfo.subregion || locationInfo.region;
+
+            // Fetch coordinates based on city name
+            const locationData = await fetchCoordinates({ cityName: cityName });
+
+            setLocation(locationData);
+        } catch (error) {
+            console.error("Error fetching location data:", error);
+        }
+    };
 
 
     return (
@@ -88,9 +130,9 @@ const CurrentWeather = () => {
 
             {/* Current weather */}
             <Container>
-                <Location>{location[0]?.name},
+                <LocationView>{location[0]?.name},
                     <Country> {location[0]?.country}</Country>
-                </Location>
+                </LocationView>
                 <WeatherImage source={sun} />
                 {isShown && (
                     <>
@@ -289,7 +331,7 @@ const WeatherImage = styled.Image`
 const Country = styled.Text`
     font-size: 18px;
 `
-const Location = styled.Text`
+const LocationView = styled.Text`
     font-size: 28px;
     font-weight:bold;
     color:white;
