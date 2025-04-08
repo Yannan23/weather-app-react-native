@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from '../theme'
 import CurrentWeather from '../components/CurrentWeather';
 import { useFonts } from 'expo-font'
+import styled from 'styled-components/native';
 
 
 const Index = () => {
@@ -29,11 +30,11 @@ const Index = () => {
                 locations={[0.2, 0.6, 0.8]}
                 style={{ flex: 1 }}
             >
-                <SafeAreaView>
+                <SafeAreaContainer>
                     <ThemeProvider theme={theme}>
                         <CurrentWeather />
                     </ThemeProvider>
-                </SafeAreaView>
+                </SafeAreaContainer>
             </LinearGradient>
         </View>
     );
@@ -41,3 +42,7 @@ const Index = () => {
 
 export default Index;
 
+const SafeAreaContainer = styled.SafeAreaView`
+    display: flex;
+    flex-grow: 1;
+`
