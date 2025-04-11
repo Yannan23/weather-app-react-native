@@ -8,11 +8,17 @@ import ConvertKelvinToCelsius from '../ConvertKelvinToCelsius';
 
 const ForecastPage = () => {
     const { weather } = useLocalSearchParams();
-
     const forecastData = weather ? JSON.parse(weather) : [];
-
     const { current, hourly, daily } = forecastData
 
+    const convertDtToLocaleDate = (dt) => {
+        const dayName = new Date(dt * 1000).toLocaleDateString('en-US', {
+            weekday: 'short'
+        })
+        return dayName
+        console.log(dayName);
+
+    }
 
     return (
         <LinearGradient
@@ -38,62 +44,21 @@ const ForecastPage = () => {
                     <CalendarDaysIcon color='white' size={30} />
                     <ThisWeek>This Week</ThisWeek>
                 </ThisWeekView>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>{current.weather[0].main}</Weather>
-                    </WeatherView>
-                    <Temp>{ConvertKelvinToCelsius(current?.temp).toFixed(0)}°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
-                <WeekWeather>
-                    <Day>sun</Day>
-                    <WeatherView>
-                        <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
-                    </WeatherView>
-                    <Temp>17°</Temp>
-                </WeekWeather>
+
+                {daily && (
+                    daily.slice(0, 7).map((day, index) => {
+                        return (
+                            <WeekWeather key={index}>
+                                <Day>{convertDtToLocaleDate(day.dt)}</Day>
+                                <WeatherView>
+                                    <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
+                                    <Weather>{day.weather[0].main}</Weather>
+                                </WeatherView>
+                                <Temp>{ConvertKelvinToCelsius(day.temp.day).toFixed(0)}°</Temp>
+                            </WeekWeather>
+                        )
+                    })
+                )}
             </SafeArea>
         </LinearGradient>
     )
