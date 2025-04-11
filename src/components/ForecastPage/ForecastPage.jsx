@@ -1,12 +1,18 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React, { useEffect, useRef } from 'react'
 import { ArrowLeftCircleIcon, CalendarDaysIcon } from 'react-native-heroicons/solid'
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link } from 'expo-router'
+import { Link, useLocalSearchParams } from 'expo-router'
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
+import ConvertKelvinToCelsius from '../ConvertKelvinToCelsius';
 
 const ForecastPage = () => {
+    const { weather } = useLocalSearchParams();
+
+    const forecastData = weather ? JSON.parse(weather) : [];
+
+    const { current, hourly, daily } = forecastData
+
 
     return (
         <LinearGradient
@@ -36,9 +42,9 @@ const ForecastPage = () => {
                     <Day>sun</Day>
                     <WeatherView>
                         <LottieView autoPlay style={{ width: 40, height: 40 }} source={require('../../assets/icons/lottie/clear-day.json')} />
-                        <Weather>rainy</Weather>
+                        <Weather>{current.weather[0].main}</Weather>
                     </WeatherView>
-                    <Temp>17°</Temp>
+                    <Temp>{ConvertKelvinToCelsius(current?.temp).toFixed(0)}°</Temp>
                 </WeekWeather>
                 <WeekWeather>
                     <Day>sun</Day>

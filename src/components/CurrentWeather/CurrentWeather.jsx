@@ -12,7 +12,7 @@ import GradientText from '../GradientText'
 import sun from '../../assets/images/partlycloudy.png'
 import { debounce } from 'lodash';
 import { fetchCoordinates, fetchLocations, fetchWeatherForecast, fetchCurrentLocation } from '../../api/weather';
-
+import ConvertKelvinToCelsius from '../ConvertKelvinToCelsius'
 
 const CurrentWeather = () => {
     const theme = useTheme()
@@ -57,9 +57,9 @@ const CurrentWeather = () => {
 
     const { current, hourly, daily } = weather
 
-    const convertKelvinToCelsius = (kelvin) => {
-        return kelvin - 273.15;
-    }
+    // const convertKelvinToCelsius = (kelvin) => {
+    //     return kelvin - 273.15;
+    // }
 
     useEffect(() => {
         fetchCurrentLocationWeatherData();
@@ -144,7 +144,7 @@ const CurrentWeather = () => {
                         <WeatherImage source={sun} />
                         {isShown && (
                             <>
-                                <TempText>{convertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
+                                <TempText>{ConvertKelvinToCelsius(current?.temp).toFixed(0)}°C</TempText>
                                 <WeatherText>{current.weather[0].main}</WeatherText>
                                 <Date>Friday 16 . 09.41am</Date>
                             </>
@@ -155,7 +155,14 @@ const CurrentWeather = () => {
                     {/* next days button */}
                     {isShown && (
                         <TouchableOpacity>
-                            <Link href='/Forecast'>
+                            <Link
+                                href={{
+                                    pathname: '/Forecast',
+                                    params: {
+                                        weather: JSON.stringify(weather)
+                                    }
+                                }}
+                            >
                                 <ButtonContainer>
                                     <GradientView>
                                         <GradientText>Next days</GradientText>
